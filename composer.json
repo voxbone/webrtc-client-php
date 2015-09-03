@@ -1,0 +1,24 @@
+{
+    "name": "voxbone/webrtc-client-php",
+    "license": "MIT",
+    "authors": [
+            {
+                "name": "Sacha Nacar",
+                "email": "developers@voxbone.com",
+                "homepage": "https://developers.voxbone.com",
+                "role": "Developer Community Manager"
+            }
+        ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/sachanacar/voxbone-webrtc-token.git"
+        }
+    ],
+    "require": {
+    },
+    "minimum-stability": "dev",
+    "require-dev": {
+        "voxbone/webrtc-token": "dev-master"
+    }
+}
