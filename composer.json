@@ -15,8 +15,6 @@
             "url": "https://github.com/sachanacar/voxbone-webrtc-token.git"
         }
     ],
-    "require": {
-    },
     "minimum-stability": "dev",
     "require-dev": {
         "voxbone/webrtc-token": "dev-master"
