@@ -4,8 +4,7 @@ Voxbone WebRTC Client PHP
 #####1. Download the dependency
 
 `````
-curl -sS https://getcomposer.org/installer | php
-mv composer.phar /usr/local/bin/composer
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 composer require --dev  voxbone/webrtc-token
 `````
 
