@@ -5,25 +5,22 @@
   <head>
     <title></title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"/>
-    <script src="https://webrtc.voxbone.com/js/voxbone-0.0.2.js" type="text/javascript"></script>
-    <script src="https://webrtc.voxbone.com/js/jssip-0.3.0.js" type="text/javascript"></script>
+    <script src="https://webrtc.voxbone.com/js/jssip-0.7.9-vox.js" type="text/javascript"></script>
+    <script src="https://webrtc.voxbone.com/js/voxbone-0.0.3.js" type="text/javascript"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-      var eventHandlers = {
-      'progress':   function(e){ document.getElementById("status_message").innerHTML="Calling " + document.getElementById('number').value;},
-      'failed':     function(e){ document.getElementById("status_message").innerHTML="<b><font color='red'>Failed to connect: " + e.data.cause + "</font></b>"},
-      'started':    function(e){ document.getElementById("status_message").innerHTML="<b><font color='green'>In Call</font></b>"; },
-      'ended':      function(e){ document.getElementById("status_message").innerHTML="<b><font color='red'>Call Ended</font></b>"; }
-      };
       /** This part is required as it handle Voxbone WebRTC initialization **/
       function init(){
       // Set the webrtc auth server url (url below it the default one)
-      voxbone.WebRTC.authServerURL = "https://webrtc.voxbone.com/rest/authentication/createToken";
+      //voxbone.WebRTC.authServerURL = "https://webrtc.voxbone.com/rest/authentication/createToken";
       //If this is not set, a ping to each pop will be issued to determine which is the most optimal for the user
       //Default is to use the ping mechanism to determine the preferedPop.
       //voxbone.WebRTC.preferedPop = 'BE';
       // set custom event handlers
-      voxbone.WebRTC.customEventHandler = eventHandlers;
+      voxbone.WebRTC.customEventHandler.progress=   function(e){ document.getElementById("status_message").innerHTML="Calling " + document.getElementById('number').value;};
+      voxbone.WebRTC.customEventHandler.failed=     function(e){ document.getElementById("status_message").innerHTML="<b><font color='red'>Failed to connect: " + e.data.cause + "</font></b>"};
+      voxbone.WebRTC.customEventHandler.accepted=    function(e){ document.getElementById("status_message").innerHTML="<b><font color='green'>In Call</font></b>"; };
+      voxbone.WebRTC.customEventHandler.ended=      function(e){ document.getElementById("status_message").innerHTML="<b><font color='red'>Call Ended</font></b>"; };
       //Set the caller-id, domain name gets automatically stripped off
       //Note that It must be a valid sip uri.
       //Default value is: voxrtc@voxbone.com
@@ -37,13 +34,14 @@
       }
       /** Optional part, only use to play with mute **/
       function toggleMute(){
-      var button = document.getElementById("mute");
       if( voxbone.WebRTC.isMuted ){
       voxbone.WebRTC.unmute();
-      button.innerHTML = "Mute";
+      $("#mute").text("Mute");
+      $("#mute_icon").removeClass("glyphicon-volume-off").addClass("glyphicon-volume-up");
       }else{
       voxbone.WebRTC.mute();
-      button.innerHTML = "Unmute";
+      $("#mute").text("Unute");
+      $("#mute_icon").removeClass("glyphicon-volume-up").addClass("glyphicon-volume-off");
       }
       }
     </script>
@@ -65,7 +63,7 @@
         <button type="button" onclick="voxbone.WebRTC.hangup();" class="btn btn-danger btn-lg btn-block">Hangup<span class="glyphicon glyphicon-remove pull-left"></span></button>
         <!--toggle mute ON/OFF
         -->
-        <button id="mute" type="button" onclick="toggleMute()" class="btn btn-link btn-block">Mute</button><br/>
+        <button type="button" onclick="toggleMute()" class="btn btn-info btn-lg btn-block"><span id="mute_icon" class="glyphicon glyphicon-volume-up pull-left"></span><span id="mute">Mute</span></button><br/>
         <div id="status_message">
           <p>Initializing configuration</p>
         </div>
