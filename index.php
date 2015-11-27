@@ -21,6 +21,7 @@
       voxbone.WebRTC.customEventHandler.failed=     function(e){ document.getElementById("status_message").innerHTML="<b><font color='red'>Failed to connect: " + e.data.cause + "</font></b>"};
       voxbone.WebRTC.customEventHandler.accepted=    function(e){ document.getElementById("status_message").innerHTML="<b><font color='green'>In Call</font></b>"; };
       voxbone.WebRTC.customEventHandler.ended=      function(e){ document.getElementById("status_message").innerHTML="<b><font color='red'>Call Ended</font></b>"; };
+      voxbone.WebRTC.customEventHandler.localMediaVolume =      function(e){ document.getElementById("volume").value = e.localVolume; };
       //Set the caller-id, domain name gets automatically stripped off
       //Note that It must be a valid sip uri.
       //Default value is: voxrtc@voxbone.com
@@ -48,7 +49,7 @@
   </head>
   <!--invoke init() method when page is initializing
   -->
-  <body onload="init();" style="text-align: center;">
+  <body onload="init();"  onbeforeunload='voxbone.WebRTC.unloadHandler();' style="text-align: center;">
     <h1>Click2Call Demo</h1>
     <div style="width:200px; margin-top:10%;" class="container">
       <form>
@@ -64,6 +65,10 @@
         <!--toggle mute ON/OFF
         -->
         <button type="button" onclick="toggleMute()" class="btn btn-info btn-lg btn-block"><span id="mute_icon" class="glyphicon glyphicon-volume-up pull-left"></span><span id="mute">Mute</span></button><br/>
+	<div>
+		Local Volume
+		<meter id="volume" low=0 high=0.15 max=1/>
+	</div>
         <div id="status_message">
           <p>Initializing configuration</p>
         </div>
